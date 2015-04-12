@@ -8,25 +8,31 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 public class Fist : MonoBehaviour {
-	public ThalmicMyo myo;
-	public Texture2D fist; 
+	public Texture2D fist_go; 
 	public Texture2D fist_success;
 
-	void Start () {
+	private ThalmicMyo myo;
+	private Texture2D fist;
+	private bool madeFist;
+
+	void Awake () {
 		myo = GameObject.Find("Myo").GetComponent<ThalmicMyo> ();
+		fist = fist_go;
 	}
 
 	void OnGUI () {
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), fist);
-		if (myo.pose == Thalmic.Myo.Pose.Fist) {
+		if (myo.pose == Thalmic.Myo.Pose.Fist && !madeFist) {
+			madeFist = true;
+			fist = fist_success;
 			Debug.Log ("Calling GUI");
-			GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), fist_success);
 			Debug.Log ("Success");
 			StartCoroutine (delay ());
 		}
 	}
 
 	IEnumerator delay () {
+		myo.Vibrate (Thalmic.Myo.VibrationType.Short);
 		yield return new WaitForSeconds (1);
 		Debug.Log ("Delayed 1 second");
 		yield return null;

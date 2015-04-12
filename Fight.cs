@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -7,20 +7,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-public class Punch : MonoBehaviour {
+public class Fight : MonoBehaviour {
 	public Texture2D punch1;
 	public Texture2D punch2;
 	public Texture2D nowPunch;
 	public Texture2D punchSuccess;
-
+	
 	public float secondsPerFrame;
 	public float frames;
 	public float punchGForce;
-
+	
 	private ThalmicMyo myo;
 	private Texture2D punch;
 	private float startTime;
 	private bool punched;
+
+	public int enemyHealth = 3;
 	
 	void Start () {
 		myo = GameObject.Find("Myo").GetComponent<ThalmicMyo> ();
@@ -35,14 +37,8 @@ public class Punch : MonoBehaviour {
 				punch = punch1;
 			}
 		} else {
-			if (!punched) {
-				punch = nowPunch;
-			} else {
-				punch = punchSuccess;
-			}
-
-			if (Mathf.Abs(myo.accelerometer.z) > punchGForce && !punched) {
-				punched = true;
+			if (Mathf.Abs(myo.accelerometer.z) > punchGForce && enemyHealth > 0) {
+				enemyHealth = enemyHealth - 1;
 				//Debug.Log ("Calling GUI");
 				//Debug.Log ("Success");
 				StartCoroutine (delay ());

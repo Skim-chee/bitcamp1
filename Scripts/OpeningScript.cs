@@ -8,10 +8,18 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 public class OpeningScript : MonoBehaviour {
-	public ThalmicMyo myo;
-	
+	private ThalmicMyo myo;
+	public Texture2D OpeningLevel;
+
+	void Start () {
+		myo = GameObject.Find("Myo").GetComponent<ThalmicMyo> ();
+	}
+
 	void OnGUI ()
 	{
+
+		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), OpeningLevel);
+
 		GUI.skin.label.fontSize = 20;
 		
 		ThalmicHub hub = ThalmicHub.instance;
@@ -42,7 +50,7 @@ public class OpeningScript : MonoBehaviour {
 	
 	void Update () {
 		Debug.Log (myo.pose);
-		if (myo.pose == Thalmic.Myo.Pose.WaveIn) {
+		if (myo.pose == Thalmic.Myo.Pose.WaveOut) {
 			Debug.Log("HEY WAVED");
 			Application.LoadLevel(1);
 		}
