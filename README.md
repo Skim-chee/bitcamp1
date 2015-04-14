@@ -11,7 +11,7 @@ accelerometer to detect the direction and acceleration of the users arm.
 
 Through this, we were able to detect two motions integral to self-defense, <b>Punching</b>, and <b>Blocking</b>. 
 
-#Links to 
+#Links 
 
 http://challengepost.com/software/bitcamp1
 
